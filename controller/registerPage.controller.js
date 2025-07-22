@@ -49,8 +49,8 @@ const registerData = async (req, res) => {
   }
   else {
     //SETTING UP THE JSONWEBTOKEN
-    const accessToken = jwtUtil.generateAccessToken({ id: createdUser._id, email: createdUser.email });
-    const refreshToken = jwtUtil.generateRefreshToken({ id: createdUser._id, email: createdUser.email });
+    const accessToken = jwtUtil.generateAccessToken({ _id: createdUser._id, email: createdUser.email });
+    const refreshToken = jwtUtil.generateRefreshToken({ _id: createdUser._id, email: createdUser.email });
 
     createdUser.refreshToken = refreshToken;
     await createdUser.save();
@@ -69,7 +69,7 @@ const registerData = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    res.redirect('homePage')
+    res.redirect('/api/messages/chat')
   }
 }
 

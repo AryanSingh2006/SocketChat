@@ -28,8 +28,8 @@ const loginData = async (req, res) => {
 
     if (isMatch) {
       //SETTING UP THE JSONWEBTOKENS
-      const accessToken = jwtUtil.generateAccessToken({ id: existedUser._id, email: existedUser.email });
-      const refreshToken = jwtUtil.generateRefreshToken({ id: existedUser._id, email: existedUser.email });
+      const accessToken = jwtUtil.generateAccessToken({ _id: existedUser._id, email: existedUser.email });
+      const refreshToken = jwtUtil.generateRefreshToken({ _id: existedUser._id, email: existedUser.email });
 
       existedUser.refreshToken = refreshToken;
       await existedUser.save();
@@ -48,7 +48,7 @@ const loginData = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000
       });
 
-      res.redirect("homePage");
+      res.redirect("/api/messages/chat");
     }
     else {
       res.render("loginPage", {

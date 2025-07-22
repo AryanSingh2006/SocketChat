@@ -1,6 +1,8 @@
 import userModel from "../models/user.model.js"
 import messageModel from "../models/message.model.js"
 import { text } from "express";
+import { io } from "../config/socket.js";
+import { requestSocketId } from "../config/socket.js";
 
 export const renderChatPage = (req,res) => {
   res.render('chat',{
@@ -53,6 +55,15 @@ export const sendmessages = async (req,res) => {
       receiveId,
       text
     })
+
+    //sending the message in the real time
+    const receiveSocketId = requestSocketId(receiveId)
+    //checking if the user is online or not
+    if(receiveSocketId){
+      io.to(receiveSocketId).emit('receiveMessage', newMessage)
+      console.log(`sending this user ${receiveId} in the real time`)
+    }
+
     res.status(201).json(newMessage);
   } catch (error) {
     console.error(error.message);
