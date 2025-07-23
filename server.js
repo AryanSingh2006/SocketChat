@@ -1,15 +1,17 @@
-import app from "./app.js";
-import {PORT} from "./config/constants.js";
+import { PORT } from "./config/constants.js";
 import connectDB from "./config/DB.config.js";
+import {server} from "./config/socket.js";
+
+
 
 const startServer = async () => {
-  try{
+  try {
     await connectDB();
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is live on http://localhost:${PORT}`)
     })
   }
-  catch(err){
+  catch (err) {
     console.error("An error occuried: ", err)
     process.exit(1);
   }

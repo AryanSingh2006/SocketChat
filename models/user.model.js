@@ -1,22 +1,28 @@
-import moongoose from "mongoose";
+import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = new moongoose.Schema({
+const userSchema = new mongoose.Schema({
   username : {
     type : String,
     required : true,
-    trim : true
+    trim : true,
+    unique : true
   },
   email : {
     type : String,
     required : true,
     trim : true,
-    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Invalid email format']
+    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Invalid email format'],
+    unique : true
   },
   password : {
     type : String,
     required : true,
     trim : true
+  },
+  refreshToken: {
+    type: String,
+    default: ""
   }
 },{
   timestamps : true
@@ -41,4 +47,4 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword,this.password);
 };
 
-export default moongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);

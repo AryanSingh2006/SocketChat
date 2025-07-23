@@ -6,4 +6,5 @@ const router = express.Router();
 
 router.get("/homePage",authmiddleware, renderHomePage)
 
+
 export default router;
