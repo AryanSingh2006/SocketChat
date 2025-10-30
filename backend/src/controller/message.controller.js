@@ -20,7 +20,7 @@ export const userSideBar = async (req, res) => {
 
 export const getmessages = async (req,res) => {
   try {
-    const {id:usertochat} = req.params
+    const usertochat = req.params.id
     const myId = req.user._id
     const message = await messageModel.find({
       $or : [
@@ -41,7 +41,7 @@ export const getmessages = async (req,res) => {
 export const sendmessages = async (req,res) => {
   try {
     const text = req.body.text
-    const {id:receiveId} = req.params
+    const receiveId = req.params.id
     const senderId = req.user._id
 
     const newMessage = await messageModel.create({
