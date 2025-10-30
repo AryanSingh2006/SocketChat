@@ -1,0 +1,34 @@
+{
+  "name": "multiuser-socket-chat",
+  "version": "1.0.0",
+  "description": "A full-stack real-time multi-user chat application built with Node.js, Express, MongoDB, and Socket.IO. Features include one-to-one messaging, group chat, friend system, and real-time notifications",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.js",
+    "type": "module"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AryanSingh2006/multiuser-socket-chat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AryanSingh2006/multiuser-socket-chat/issues"
+  },
+  "homepage": "https://github.com/AryanSingh2006/multiuser-socket-chat#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.3",
+    "nodemon": "^3.1.10",
+    "socket.io": "^4.8.1"
+  }
+}

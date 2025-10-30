@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - ChatApp</title>
+  <link rel="stylesheet" href="/css/registerPage.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="auth-container">
+    <a href="/" class="back-link">Back to Home</a>
+    
+    <h1>Join ChatApp</h1>
+    <p class="subtitle">Create your account and start connecting with others</p>
+    
+    <form action="/register" method="post">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Choose a username" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+      </div>
+      
+      <button type="submit">Create Account</button>
+    </form>
+    
+    <p style="color: #888; font-size: 0.9rem;">
+      Already have an account? 
+      <a href="/login" style="color: #3b82f6; text-decoration: none;">Sign in here</a>
+    </p>
+  </div>
+
+  <%# Enhanced alert handling %>
+  <% if (typeof alert !== 'undefined' && alert) { %>
+    <div class="alert success" id="successAlert">
+      <strong>Success:</strong> <%= alert %>
+    </div>
+    <script>
+      setTimeout(() => {
+        const alert = document.getElementById('successAlert');
+        if (alert) alert.remove();
+      }, 5000);
+    </script>
+  <% } %>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert" id="errorAlert">
+      <strong>Error:</strong> <%= error %>
+    </div>
+    <script>
+      setTimeout(() => {
+        const alert = document.getElementById('errorAlert');
+        if (alert) alert.remove();
+      }, 5000);
+    </script>
+  <% } %>
+</body>
+</html>
