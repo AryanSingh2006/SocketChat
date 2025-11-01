@@ -11,3 +11,5 @@ const router = express.Router();
 router.get('/userSideBar', authMiddleware,userSideBar);
 router.get('/:id', authMiddleware, getmessages);
 router.post('/send/:id', authMiddleware, sendmessages)
+
+export default router;
