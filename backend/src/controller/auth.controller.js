@@ -13,12 +13,6 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    //Check if fullName already exists
-    const existingFullName = await user.findOne({ fullName });
-    if (existingFullName) {
-      return res.status(400).json({ message: "fullName already exists" });
-    }
-
     //Create user in MongoDB
     const createdUser = await user.create({
       fullName,
@@ -43,8 +37,8 @@ export const signup = async (req, res) => {
     // Set cookie with token
     res.cookie("token", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: true,
+      sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000
     });
 
@@ -91,8 +85,8 @@ export const login = async (req, res) => {
       // Store the token in an HTTP-only cookie for security
       res.cookie("token", accessToken, {
         httpOnly: true,
-        secure: NODE_ENV === "production",
-        sameSite: "Strict",
+        secure: true,
+        sameSite: "None",
         maxAge: 24 * 60 * 60 * 1000 // Token valid for 1 day
       });
 
@@ -125,8 +119,8 @@ export const logout = (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      sameSite: "Strict",
-      secure: NODE_ENV
+      sameSite: "None",
+      secure: true
     });
     res.status(200).json({
       message: "Logout successfully"
