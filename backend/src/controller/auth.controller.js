@@ -3,7 +3,7 @@ import jwtUtil from "../utils/jwt.utils.js";
 import { NODE_ENV } from "../config/constants.js";
 
 export const signup = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { fullName, email, password } = req.body;
 
   try {
     //Check if email already exists
@@ -12,15 +12,15 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    //Check if username already exists
-    const existingUsername = await user.findOne({ username });
-    if (existingUsername) {
-      return res.status(400).json({ message: "Username already exists" });
+    //Check if fullName already exists
+    const existingFullName = await user.findOne({ fullName });
+    if (existingFullName) {
+      return res.status(400).json({ message: "fullName already exists" });
     }
 
     //Create user in MongoDB
     const createdUser = await user.create({
-      username,
+      fullName,
       email,
       password
     });
@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
     // Generate JWT
     const accessToken = jwtUtil.generateAccessToken({
       _id: createdUser._id,
-      name: createdUser.username,
+      name: createdUser.fullName,
       email: createdUser.email
     });
 
@@ -52,7 +52,7 @@ export const signup = async (req, res) => {
       message: "User registered successfully",
       user: {
         _id: createdUser._id,
-        username: createdUser.username,
+        fullName: createdUser.fullName,
         email: createdUser.email
       }
     });
@@ -84,7 +84,7 @@ export const login = async (req, res) => {
       const accessToken = jwtUtil.generateAccessToken({
         _id: existedUser._id,
         email: existedUser.email,
-        username: existedUser.username
+        fullName: existedUser.fullName
       });
 
       // Store the token in an HTTP-only cookie for security
@@ -101,7 +101,7 @@ export const login = async (req, res) => {
         user: {
           _id: existedUser._id,
           email: existedUser.email,
-          username: existedUser.username
+          fullName: existedUser.fullName
         }
       });
     } else {
@@ -136,3 +136,14 @@ export const logout = (req, res) => {
     })
   }
 };
+
+export const checkAuth = (req, res) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    console.log("Error in checking Auth: ", error.message);
+    res.status(500).json({
+      message: "Internal Server error"
+    })
+  }
+}
