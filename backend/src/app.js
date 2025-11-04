@@ -18,7 +18,10 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://socket-chat-amber.vercel.app",
+  ],
   credentials: true
 }))
 
