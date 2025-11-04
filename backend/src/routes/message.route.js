@@ -3,13 +3,13 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 import { 
   userSideBar,
   getmessages,
-  sendmessages
+  sendMessage
 } from "../controller/message.controller.js";
 
 const router = express.Router();
 
-router.get('/userSideBar', authMiddleware,userSideBar);
+router.get('/users', authMiddleware,userSideBar);
 router.get('/:id', authMiddleware, getmessages);
-router.post('/send/:id', authMiddleware, sendmessages)
+router.post('/send/:id', authMiddleware, sendMessage)
 
 export default router;

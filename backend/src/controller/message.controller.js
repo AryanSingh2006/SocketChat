@@ -1,7 +1,7 @@
 import userModel from "../models/user.model.js"
 import messageModel from "../models/message.model.js"
-import { io } from "../config/socket.js";
-import { requestSocketId } from "../config/socket.js";
+import { io, getReceiverSocketId } from "../config/socket.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const userSideBar = async (req, res) => {
   try {
@@ -18,14 +18,14 @@ export const userSideBar = async (req, res) => {
   }
 }
 
-export const getmessages = async (req,res) => {
+export const getmessages = async (req, res) => {
   try {
     const usertochat = req.params.id
     const myId = req.user._id
     const message = await messageModel.find({
-      $or : [
-        {senderId : myId, receiveId : usertochat},
-        { senderId : usertochat, receiveId : myId}
+      $or: [
+        { senderId: myId, receiverId: usertochat },
+        { senderId: usertochat, receiverId: myId }
       ]
     })
 
@@ -33,34 +33,41 @@ export const getmessages = async (req,res) => {
   } catch (error) {
     console.log(error.message)
     res.status(500).json({
-      error : error.message
+      error: error.message
     })
   }
 }
 
-export const sendmessages = async (req,res) => {
+export const sendMessage = async (req, res) => {
   try {
-    const text = req.body.text
-    const receiveId = req.params.id
-    const senderId = req.user._id
+    const { text, image } = req.body;
+    const { id: receiverId } = req.params;
+    const senderId = req.user._id;
 
-    const newMessage = await messageModel.create({
+    let imageUrl;
+    if (image) {
+      // Upload base64 image to cloudinary
+      const uploadResponse = await cloudinary.uploader.upload(image);
+      imageUrl = uploadResponse.secure_url;
+    }
+
+    const newMessage = new messageModel({
       senderId,
-      receiveId,
-      text
-    })
+      receiverId,
+      text,
+      image: imageUrl,
+    });
 
-    //sending the message in the real time
-    const receiveSocketId = requestSocketId(receiveId)
-    //checking if the user is online or not
-    if(receiveSocketId){
-      io.to(receiveSocketId).emit('receiveMessage', newMessage)
-      console.log(`sending this user ${receiveId} in the real time`)
+    await newMessage.save();
+
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
     res.status(201).json(newMessage);
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ error: error.message });
+    console.log("Error in sendMessage controller: ", error.message);
+    res.status(500).json({ error: "Internal server error" });
   }
-}
+};
