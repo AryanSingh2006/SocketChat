@@ -27,30 +27,30 @@ A full-stack, modern real-time chat application featuring **one-to-one messaging
 ## 🛠️ Tech Stack
 
 ### Frontend
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| React | 19.1.1 | UI library |
-| Vite | 7.1.7 | Build tool & dev server |
-| Tailwind CSS | 4.1.16 | Utility-first CSS framework |
-| DaisyUI | 5.3.10 | Tailwind component library |
-| Socket.IO Client | 4.8.1 | Real-time WebSocket client |
-| Zustand | 5.0.8 | State management |
-| Axios | 1.13.1 | HTTP client |
-| React Router | 7.9.5 | Client-side routing |
-| React Hot Toast | 2.6.0 | Notifications |
+| Technology       | Version | Purpose                     |
+| ---------------- | ------- | --------------------------- |
+| React            | 19.1.1  | UI library                  |
+| Vite             | 7.1.7   | Build tool & dev server     |
+| Tailwind CSS     | 4.1.16  | Utility-first CSS framework |
+| DaisyUI          | 5.3.10  | Tailwind component library  |
+| Socket.IO Client | 4.8.1   | Real-time WebSocket client  |
+| Zustand          | 5.0.8   | State management            |
+| Axios            | 1.13.1  | HTTP client                 |
+| React Router     | 7.9.5   | Client-side routing         |
+| React Hot Toast  | 2.6.0   | Notifications               |
 
 ### Backend
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| Node.js | LTS | Runtime environment |
-| Express | 5.1.0 | Web server framework |
-| MongoDB | (Atlas) | NoSQL database |
-| Mongoose | 8.16.3 | MongoDB ODM |
-| Socket.IO | 4.8.1 | Real-time communication |
-| JWT | (jsonwebtoken) | Authentication tokens |
-| Bcryptjs | 3.0.2 | Password hashing |
-| Cloudinary | 2.8.0 | Image hosting & optimization |
-| CORS | 2.8.5 | Cross-origin resource sharing |
+| Technology | Version        | Purpose                       |
+| ---------- | -------------- | ----------------------------- |
+| Node.js    | LTS            | Runtime environment           |
+| Express    | 5.1.0          | Web server framework          |
+| MongoDB    | (Atlas)        | NoSQL database                |
+| Mongoose   | 8.16.3         | MongoDB ODM                   |
+| Socket.IO  | 4.8.1          | Real-time communication       |
+| JWT        | (jsonwebtoken) | Authentication tokens         |
+| Bcryptjs   | 3.0.2          | Password hashing              |
+| Cloudinary | 2.8.0          | Image hosting & optimization  |
+| CORS       | 2.8.5          | Cross-origin resource sharing |
 
 ---
 
@@ -281,21 +281,21 @@ Frontend (React)                Backend (Express)          Database (MongoDB)
 
 ### Authentication Routes (`/api/auth`)
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/signup` | Register new user | ❌ |
-| POST | `/login` | Login user | ❌ |
-| POST | `/logout` | Logout user | ✅ |
-| GET | `/check` | Verify authentication | ✅ |
-| PUT | `/update-profile` | Update profile picture | ✅ |
+| Method | Endpoint          | Description            | Auth |
+| ------ | ----------------- | ---------------------- | ---- |
+| POST   | `/signup`         | Register new user      | ❌    |
+| POST   | `/login`          | Login user             | ❌    |
+| POST   | `/logout`         | Logout user            | ✅    |
+| GET    | `/check`          | Verify authentication  | ✅    |
+| PUT    | `/update-profile` | Update profile picture | ✅    |
 
 ### Message Routes (`/api/messages`)
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/users` | Get all users except current | ✅ |
-| GET | `/:id` | Get messages with user | ✅ |
-| POST | `/send/:id` | Send message to user | ✅ |
+| Method | Endpoint    | Description                  | Auth |
+| ------ | ----------- | ---------------------------- | ---- |
+| GET    | `/users`    | Get all users except current | ✅    |
+| GET    | `/:id`      | Get messages with user       | ✅    |
+| POST   | `/send/:id` | Send message to user         | ✅    |
 
 ---
 
@@ -303,17 +303,17 @@ Frontend (React)                Backend (Express)          Database (MongoDB)
 
 ### Client → Server Events
 
-| Event | Payload | Purpose |
-|-------|---------|---------|
+| Event        | Payload    | Purpose                    |
+| ------------ | ---------- | -------------------------- |
 | `connection` | `{userId}` | User connects to Socket.IO |
-| `disconnect` | - | User disconnects |
+| `disconnect` | -          | User disconnects           |
 
 ### Server → Client Events
 
-| Event | Payload | Purpose |
-|-------|---------|---------|
-| `getOnlineUsers` | `[userId, ...]` | List of online user IDs |
-| `newMessage` | Message Object | Receive message from another user |
+| Event            | Payload         | Purpose                           |
+| ---------------- | --------------- | --------------------------------- |
+| `getOnlineUsers` | `[userId, ...]` | List of online user IDs           |
+| `newMessage`     | Message Object  | Receive message from another user |
 
 ---
 
